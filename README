@@ -1,7 +1,8 @@
 spreadsheetReader is a python program to import data from a google  spread sheet.
 
 Provide a one-way import of patient appointment information from a Google Documents Spreadsheet.
-
+This is a command line program to run: add spreadsheet name to self.getSpreadsheet() inside Run() function
+then type python spreadsheetsExample.py --user=<username> --pw=<password> on command line.
 The enrollment worksheet uses list based feeds the first row is assumed to be the header row and 
 every row after that, the first empty row terminates a data set.The month worksheet is cell based.
 The data from each worksheet is converted into its original format and stored in a list that contains lists
