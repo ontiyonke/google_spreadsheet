@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <span>Sign In</span>
+{% endblock %}
+
+{% block error %}
+    {% if form.errors %}
+        <div class="alert">
+            <span class="error">Unable to sign in. Incorrect Details.</span>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="widget border">
+        <form action="" method="post" accept-charset="utf-8">
+            <label>Cell Phone Number</label><br>
+            {{form.username}}<br>
+            <label>Patient ID</label><br>
+            {{form.password}}<br>
+            <input type="submit" value="Sign In" class="submit">
+            <input type="hidden" name="next" value="{{next}}">
+            <a href="{% url bookings:request_call %}">I forgot my Patient ID</a><br>
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}
+
+{% block post_content %}
+<div class="widget">
+    <span class="black">Need help?</span><br>
+    <a href="{% url bookings:request_call %}">You can request a call from us.</a>
+</div>
+{% include "includes/young_africa_live.html" %}
+
+{% endblock %}
