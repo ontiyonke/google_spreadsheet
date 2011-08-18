@@ -21,31 +21,14 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         importer = Importer(
             uri='https://docs.google.com' % (
-                Setting.objects.get(name='THERAPYEDGE_USERNAME').value,
-                Setting.objects.get(name='THERAPYEDGE_PASSWORD').value
+                Setting.objects.get(name='GOOGLE_USERNAME').value,
+                Setting.objects.get(name='GOOGLE_PASSWORD').value
             ),
             verbose=settings.DEBUG
         )
-        for clinic in Clinic.objects.filter(active=True):
-            # from midnight
-            midnight = datetime.now().replace(
-                hour=0,
-                minute=0,
-                second=0,
-                microsecond=0
-            )
-            since = midnight - timedelta(days=1)
-            # until 30 days later
-            until = midnight + timedelta(days=30)
-            print clinic.name, 'from', since, 'until', until
+        for spreadsheet in SpreadSheet.objects.filter(active=True):
             try:
-                for key, value in importer.import_all_changes(
-                        User.objects.get(username='kumbu'),
-                        clinic, 
-                        since=since,
-                        until=until
-                    ).items():
-                    print "\t%s: %s" % (key, len(value))
+                importer.import_spread_sheet(spreadsheet)
             except ExpatError, e:
                 print "Exception during processing XML for clinic ", clinic
                 traceback.print_exc()
